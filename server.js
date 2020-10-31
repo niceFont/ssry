@@ -8,19 +8,13 @@ const app = express();
 app.set('views', `${__dirname}/views`);
 app.set('view engine', 'ejs');
 app.use(express.static(`${__dirname}/public`));
+app.use('/static', express.static(`${__dirname}/static`));
 app.disable('x-powered-by');
 
-app.get('/:page*?', async (req, res) => {
+app.get('*', async (req, res) => {
   try {
-    const { page } = req.params;
     const { url } = req;
-    console.log(url);
-    let File;
-    if (!page) {
-      File = (await import(`${__dirname}/views/pages`)).default;
-    } else {
-      File = (await import(`${__dirname}/views/pages/${page}`)).default;
-    }
+    const File = (await import(`${__dirname}/views/pages${url}`)).default;
     const App = (await import(`${__dirname}/views/pages/_app`)).default;
     let html;
     if (File.getInitialProps) {

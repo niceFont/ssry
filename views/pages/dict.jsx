@@ -11,7 +11,7 @@ const Dict = ({ list }) => {
       </h1>
       {count}
       <button type="button" onClick={() => setCount(count + 1)}>Upvote</button>
-      {list && list.map((item) => <div>{item.definition}</div>)}
+      {list && list.map((item) => <div key={item.definition}>{item.definition}</div>)}
     </>
   );
 };
